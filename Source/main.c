@@ -1,9 +1,9 @@
-#include "Arvore.c"
+#include "tree.c"
 
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 
 int main(int argc, char *argv[]) {
-	Arvore * a = criar();
+	Tree * a = criar();
 	inserir(a, 20);
 	inserir(a, 10);
 	inserir(a, 30);
