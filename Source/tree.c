@@ -7,21 +7,16 @@ struct tree {
 	Node * root;
 };
 
-struct Node {
+struct node {
 	char * name;
 	Node * left;
 	Node * right;
 };
 
 Tree * criar() {
-   Tree * a = malloc(sizeof(Tree));
-   a->root = NULL;
-   return a;
-}
-
-void destruir(Tree * a) {
-	desalocar_Nodes_rec(a->root);
-	free(a);
+   Tree * t = malloc(sizeof(Tree));
+   t->root = NULL;
+   return t;
 }
 
 void desalocar_Nodes_rec(Node * root) {
@@ -32,14 +27,14 @@ void desalocar_Nodes_rec(Node * root) {
 	}
 }
 
-void imprimir(Tree * a) {
-	imp_pre(a->root);
-	printf("\n");
-} 
+void destruir(Tree * t) {
+	desalocar_Nodes_rec(t->root);
+	free(t);
+}
 
 void imp_pre(Node * root) {
 	if (root != NULL) {
-		printf("%d ", root->name);
+		printf("%s ", root->name);
 		imp_pre(root->left);
 		imp_pre(root->right);
 	}
@@ -48,7 +43,7 @@ void imp_pre(Node * root) {
 void imp_in(Node * root) {
 	if (root != NULL) {
 		imp_in(root->left);
-		printf("%d ", root->name);
+		printf("%s ", root->name);
 		imp_in(root->right);
 	}
 }
@@ -57,13 +52,14 @@ void imp_pos(Node * root) {
 	if (root != NULL) {
 		imp_pos(root->left);
 		imp_pos(root->right);
-		printf("%d ", root->name);
+		printf("%s ", root->name);
 	}
 }
 
-int altura(Tree * arv) {
-	return altura_rec(arv->root);
-}
+void imprimir(Tree * a) {
+	imp_pre(a->root);
+	printf("\n");
+} 
 
 int altura_rec(Node * root) {
 	if (root != NULL) {
@@ -73,6 +69,11 @@ int altura_rec(Node * root) {
 	}
 	return -1;
 }
+
+int altura(Tree * arv) {
+	return altura_rec(arv->root);
+}
+
 
 int contar_folhas(Tree * arv) {
 	return contar_folhas_rec(arv->root);
@@ -96,10 +97,11 @@ int buscar(Tree * arv, char * v) {
 
 int buscar_rec(Node * root, char * v) {
 	if (root != NULL) {
-		if (root->name > v) {
+		int result = strcmp(v, root->name);
+		if (result < 0) {
 			return buscar_rec(root->left, v);
 		}
-		if (root->name < v) {
+		if (result > 0) {
 			return buscar_rec(root->right, v);
 		}
 		return 1;
@@ -107,35 +109,35 @@ int buscar_rec(Node * root, char * v) {
 	return 0;
 }
 
-Node * inserir_rec(Node * root, char * v) {
+Node * inserir_rec(Node * root, char * n) {
 	if (root != NULL) {
-		int result = strcmp(v, root->name);
+		int result = strcmp(n, root->name);
 		if (result < 0) {
-			root->left = inserir_rec(root->left, v);
+			root->left = inserir_rec(root->left, n);
 		}
 		if (result > 0) {
-			root->right = inserir_rec(root->right, v);
+			root->right = inserir_rec(root->right, n);
 		}
 	} else {
 		root = malloc(sizeof(Node));
-		root->name = v;
+		root->name = n;
 		root->left = NULL;
 		root->right = NULL;
 	}
 	return root;
 }
 
-void inserir(Tree * arv, char * v) {
-	arv->root = inserir_rec(arv->root, v);
+void inserir(Tree * arv, char * n) {
+	arv->root = inserir_rec(arv->root, n);
 }
 
-Node * remover_maior(Node * root, int * pmaior) {
+Node * remover_maior(Node * root, char * pmaior) {
 	if (root != NULL) {
 		if (root->right != NULL) {
 			root->right = remover_maior(root->right, pmaior);
 		} else {
 			Node * aux = root;
-			*pmaior = root->name;
+			pmaior = root->name;
 			root = root->left;
 			free(aux);
 		}
@@ -143,13 +145,14 @@ Node * remover_maior(Node * root, int * pmaior) {
 	return root;
 }
 
-Node * remover_rec(Node * root, char * v) {
+Node * remover_rec(Node * root, char * n) {
 	if (root != NULL) {
-		if (root->name > v) {
-			root->left = remover_rec(root->left, v);
+		int result = strcmp(n, root->name);
+		if (result < 0) {
+			root->left = remover_rec(root->left, n);
 		} else {
-			if (root->name < v) {
-				root->right = remover_rec(root->right, v);
+			if (result > 0) {
+				root->right = remover_rec(root->right, n);
 			} else { //ENCONTROU
 				Node * aux = root;
 				// FOLHA (GRAU 0)
@@ -162,8 +165,8 @@ Node * remover_rec(Node * root, char * v) {
 						root = root->left != NULL ? root->left : root->right;
 						free(aux);
 					} else { //GRAU 2
-						int maior;
-						root->left = remover_maior(root->left, &maior);
+						char * maior;
+						root->left = remover_maior(root->left, maior);
 						root->name = maior;
 					}
 				}
@@ -173,6 +176,6 @@ Node * remover_rec(Node * root, char * v) {
 	return root;
 }
 
-void remover(Tree * tree, char * v) {
-	tree->root = remover_rec(tree->root, v);
+void remover(Tree * tree, char * n) {
+	tree->root = remover_rec(tree->root, n);
 }
