@@ -1,4 +1,5 @@
 #include "../Headers/tree.h"
+#include "../Utilities/readData.c"
 
 typedef struct node Node;
 
