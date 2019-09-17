@@ -1,6 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include "Arvore.h"
+#include "../Headers/Arvore.h"
 
 typedef struct no No;
 
@@ -217,7 +215,7 @@ void inserir2(Arvore * arv, int v) {
 
 void remover2(Arvore * arv, int v) {
 	No * pai = NULL, * raiz = arv->raiz;
-	//COMEÇA COM UMA BUSCA
+	//COMEï¿½A COM UMA BUSCA
 	while(raiz != NULL) {
 		if (raiz->info == v) {
 			break;
@@ -268,7 +266,7 @@ void remover2(Arvore * arv, int v) {
 			free(raiz);
 		} else { //GRAU 2
 			No * no_maior = raiz->esq;
-			//percorre à direita até NULO
+			//percorre ï¿½ direita atï¿½ NULO
 			pai = raiz;
 			while(no_maior->dir != NULL) {
 				pai = no_maior;
