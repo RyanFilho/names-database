@@ -12,110 +12,110 @@ struct node {
 	Node * right;
 };
 
-Tree * criar() {
+Tree * Create() {
    Tree * t = malloc(sizeof(Tree));
    t->root = NULL;
    return t;
 }
 
-void desalocar_Nodes_rec(Node * root) {
+void DestroyNodes(Node * root) {
 	if (root != NULL) {
-		desalocar_Nodes_rec(root->left);
-		desalocar_Nodes_rec(root->right);
+		DestroyNodes(root->left);
+		DestroyNodes(root->right);
 		free(root);
 	}
 }
 
-void destruir(Tree * t) {
-	desalocar_Nodes_rec(t->root);
+void Destroy(Tree * t) {
+	DestroyNodes(t->root);
 	free(t);
 }
 
-void imp_pre(Node * root) {
+void ShowPreOrder(Node * root) {
 	if (root != NULL) {
 		printf("%s ", root->name);
-		imp_pre(root->left);
-		imp_pre(root->right);
+		ShowPreOrder(root->left);
+		ShowPreOrder(root->right);
 	}
 }
 
-void imp_in(Node * root) {
+void ShowInOrder(Node * root) {
 	if (root != NULL) {
-		imp_in(root->left);
+		ShowInOrder(root->left);
 		printf("%s ", root->name);
-		imp_in(root->right);
+		ShowInOrder(root->right);
 	}
 }
 
-void imp_pos(Node * root) {
+void ShowPosOrder(Node * root) {
 	if (root != NULL) {
-		imp_pos(root->left);
-		imp_pos(root->right);
+		ShowPosOrder(root->left);
+		ShowPosOrder(root->right);
 		printf("%s ", root->name);
 	}
 }
 
-void imprimir(Tree * a) {
-	imp_pre(a->root);
+void Show(Tree * a) {
+	ShowPreOrder(a->root);
 	printf("\n");
 } 
 
-int altura_rec(Node * root) {
+int NodeHeight(Node * root) {
 	if (root != NULL) {
-		int ad = altura_rec(root->right);
-		int ae = altura_rec(root->left);
+		int ad = NodeHeight(root->right);
+		int ae = NodeHeight(root->left);
 		return (ad > ae ? ad : ae) + 1;
 	}
 	return -1;
 }
 
-int altura(Tree * arv) {
-	return altura_rec(arv->root);
+int Height(Tree * arv) {
+	return NodeHeight(arv->root);
 }
 
 
-int contar_folhas(Tree * arv) {
-	return contar_folhas_rec(arv->root);
+int LeavesCount(Tree * arv) {
+	return NodesLeavesCount(arv->root);
 }
 
-int contar_folhas_rec(Node * root) {
+int NodesLeavesCount(Node * root) {
 	if (root != NULL) {
 		if (root->left == NULL && root->right == NULL) {
 			return 1;
 		} else {
-			return contar_folhas_rec(root->left) +
-				   contar_folhas_rec(root->right);
+			return NodesLeavesCount(root->left) +
+				   NodesLeavesCount(root->right);
 		}
 	}
 	return 0;
 }
 
-int buscar(Tree * arv, char * v) {
-	return buscar_rec(arv->root, v);
+int Find(Tree * arv, char * v) {
+	return FindNode(arv->root, v);
 }
 
-int buscar_rec(Node * root, char * v) {
+int FindNode(Node * root, char * v) {
 	if (root != NULL) {
 		int result = strcmp(v, root->name);
 		if (result < 0) {
-			return buscar_rec(root->left, v);
+			return FindNode(root->left, v);
 		}
 		if (result > 0) {
-			return buscar_rec(root->right, v);
+			return FindNode(root->right, v);
 		}
 		return 1;
 	}
 	return 0;
 }
 
-Node * inserir_rec(Node * root, char * n) {
+Node * InsertNode(Node * root, char * n) {
 	if (root != NULL) {
 		int result = strcmp(n, root->name);
 		if (result < 0) {
-			root->left = inserir_rec(root->left, n);
+			root->left = InsertNode(root->left, n);
 		}
 		if (result > 0) {
-			root->right = inserir_rec(root->right, n);
+			root->right = InsertNode(root->right, n);
 		}
 	} else {
 		root = malloc(sizeof(Node));
@@ -126,14 +126,14 @@ Node * inserir_rec(Node * root, char * n) {
 	return root;
 }
 
-void inserir(Tree * arv, char * n) {
-	arv->root = inserir_rec(arv->root, n);
+void Insert(Tree * arv, char * n) {
+	arv->root = InsertNode(arv->root, n);
 }
 
-Node * remover_maior(Node * root, char * pmaior) {
+Node * RemoveBigger(Node * root, char * pmaior) {
 	if (root != NULL) {
 		if (root->right != NULL) {
-			root->right = remover_maior(root->right, pmaior);
+			root->right = RemoveBigger(root->right, pmaior);
 		} else {
 			Node * aux = root;
 			pmaior = root->name;
@@ -144,14 +144,14 @@ Node * remover_maior(Node * root, char * pmaior) {
 	return root;
 }
 
-Node * remover_rec(Node * root, char * n) {
+Node * RemoveNode(Node * root, char * n) {
 	if (root != NULL) {
 		int result = strcmp(n, root->name);
 		if (result < 0) {
-			root->left = remover_rec(root->left, n);
+			root->left = RemoveNode(root->left, n);
 		} else {
 			if (result > 0) {
-				root->right = remover_rec(root->right, n);
+				root->right = RemoveNode(root->right, n);
 			} else { //ENCONTROU
 				Node * aux = root;
 				// FOLHA (GRAU 0)
@@ -165,7 +165,7 @@ Node * remover_rec(Node * root, char * n) {
 						free(aux);
 					} else { //GRAU 2
 						char * maior;
-						root->left = remover_maior(root->left, maior);
+						root->left = RemoveBigger(root->left, maior);
 						root->name = maior;
 					}
 				}
@@ -175,6 +175,6 @@ Node * remover_rec(Node * root, char * n) {
 	return root;
 }
 
-void remover(Tree * tree, char * n) {
-	tree->root = remover_rec(tree->root, n);
+void Remove(Tree * tree, char * n) {
+	tree->root = RemoveNode(tree->root, n);
 }
