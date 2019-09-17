@@ -50,3 +50,11 @@ fornecido.
 8. Salvar o conteúdo da memória em um arquivo texto.
 Para facilitar a implementação, armazene todas os nomes em letras minúsculas, e considere as entradas
 fornecidas nas operações como sendo minúsculas. 
+
+
+
+###### Commands to run on docker:
+```powershell
+$ docker build -t names-database .
+$ docker run -it --rm --name names-database names-database
+```
