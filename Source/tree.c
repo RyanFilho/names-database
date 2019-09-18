@@ -73,23 +73,6 @@ int Height(Tree * arv) {
 	return NodeHeight(arv->root);
 }
 
-
-int LeavesCount(Tree * arv) {
-	return NodesLeavesCount(arv->root);
-}
-
-int NodesLeavesCount(Node * root) {
-	if (root != NULL) {
-		if (root->left == NULL && root->right == NULL) {
-			return 1;
-		} else {
-			return NodesLeavesCount(root->left) +
-				   NodesLeavesCount(root->right);
-		}
-	}
-	return 0;
-}
-
 int Find(Tree * arv, char * v) {
 	return FindNode(arv->root, v);
 }
