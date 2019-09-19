@@ -1,4 +1,4 @@
-#include "../Headers/utilities.h";
+#include "../Headers/utilities.h"
 
 FILE* OpenDataTxt()
 {
@@ -29,29 +29,29 @@ int CountDataTxt(FILE* arq)
     return countLines;
 } 
 
-char* ReturnDataTxt(FILE* arq)
-{
-    char line[30];
-    char* result;
-    int countIndex = 0;
+// char* ReturnDataTxt(FILE* arq)
+// {
+//     char line[30];
+//     char* result;
+//     int countIndex = 0;
 
-    int countList = CountDataTxt(arq);
-    char* arrayOfNames[countList];
+//     int countList = CountDataTxt(arq);
+//     char* arrayOfNames[countList];
 
-    while(!feof(arq))
-    {
-        result = fgets(line, 30, arq);
+//     while(!feof(arq))
+//     {
+//         result = fgets(line, 30, arq);
 
-        if(result)
-        {
-            arrayOfNames[countIndex] = line;
-        }
+//         if(result)
+//         {
+//             arrayOfNames[countIndex] = line;
+//         }
 
-        countIndex++;
-    }
+//         countIndex++;
+//     }
 
-    return arrayOfNames;
-}
+//     return arrayOfNames;
+// }
 
 void ShowDataTxt(FILE* arq)
 {
