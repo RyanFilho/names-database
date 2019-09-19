@@ -40,6 +40,14 @@ void ShowPreOrder(Node * root) {
 	}
 }
 
+void ShowPreOrderNewLine (Node * root) {
+	if (root != NULL) {
+		printf("%s\n", root->name);
+		ShowPreOrder(root->left);
+		ShowPreOrder(root->right);
+	}
+}
+
 void ShowInOrder(Node * root) {
 	if (root != NULL) {
 		ShowInOrder(root->left);
