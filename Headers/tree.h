@@ -7,7 +7,6 @@ Tree * Create();
 void Destroy(Tree * t);
 
 int Height(Tree * t);
-int LeavesCount(Tree * t);
 void Show(Tree * t);
 
 int Find(Tree * t, char * v);
