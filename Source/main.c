@@ -5,15 +5,15 @@
 int main(int argc, char *argv[]) {
 
 	Tree * a = Create();
-	Insert(a, "a");
-	Insert(a, "b");
-	Insert(a, "c");
-	Insert(a, "d");
-	Insert(a, "e");
-	Insert(a, "f");
-	Insert(a, "g");	
+	Insert(a, "Ryan Sampaio");
+	Insert(a, "Lysando Carioca");
+	Insert(a, "Samuel Camilo");
+	Insert(a, "Bill Gates");
+	Insert(a, "Linus Tovald");
+	Insert(a, "Kent Beck");
+	Insert(a, "Jah Rastafari");	
 
-	Show(a);
+	ShowLike(a, "an");
 
 	return 0;
 

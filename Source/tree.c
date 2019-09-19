@@ -1,5 +1,6 @@
 #include "../Headers/tree.h"
 #include "../Utilities/readData.c"
+#include <string.h>
 
 typedef struct node Node;
 
@@ -32,40 +33,16 @@ void Destroy(Tree * t) {
 	free(t);
 }
 
-void ShowPreOrder(Node * root) {
-	if (root != NULL) {
-		printf("%s ", root->name);
-		ShowPreOrder(root->left);
-		ShowPreOrder(root->right);
-	}
-}
-
-void ShowPreOrderNewLine (Node * root) {
-	if (root != NULL) {
+void ShowInOrderNewLine(Node * root) {
+	if (root != NULL) {		
+		ShowInOrderNewLine(root->left);
 		printf("%s\n", root->name);
-		ShowPreOrder(root->left);
-		ShowPreOrder(root->right);
-	}
-}
-
-void ShowInOrder(Node * root) {
-	if (root != NULL) {
-		ShowInOrder(root->left);
-		printf("%s ", root->name);
-		ShowInOrder(root->right);
-	}
-}
-
-void ShowPosOrder(Node * root) {
-	if (root != NULL) {
-		ShowPosOrder(root->left);
-		ShowPosOrder(root->right);
-		printf("%s ", root->name);
+		ShowInOrderNewLine(root->right);
 	}
 }
 
 void Show(Tree * a) {
-	ShowPreOrder(a->root);
+	ShowInOrderNewLine(a->root);
 	printf("\n");
 } 
 
@@ -170,3 +147,16 @@ Node * RemoveNode(Node * root, char * n) {
 void Remove(Tree * tree, char * n) {
 	tree->root = RemoveNode(tree->root, n);
 }
+
+void ShowInOrderNewLineLike(Node * root, char * substring) {
+	if (root != NULL) {		
+		ShowInOrderNewLineLike(root->left, substring);
+		if (strstr(root->name, substring) != NULL) printf("%s\n", root->name);
+		ShowInOrderNewLineLike(root->right, substring);
+	}
+}
+
+void ShowLike(Tree * a, char * substring) {
+	ShowInOrderNewLineLike(a->root, substring);
+	printf("\n");
+} 
