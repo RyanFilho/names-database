@@ -1,6 +1,6 @@
-#include "../Headers/readData.h";
+#include "../Headers/utilities.h";
 
-FILE* ReadDataTxt()
+FILE* OpenDataTxt()
 {
     FILE *arq;
 
@@ -10,14 +10,58 @@ FILE* ReadDataTxt()
         return arq;
 }
 
+int CountDataTxt(FILE* arq)
+{
+    char line[30];
+    char* result;
+    int countLines = 0;
+
+    while (!feof(arq))
+    {
+        result = fgets(line, 100,arq);
+
+        if(result)
+            countLines++;
+    }
+    
+    fclose(arq);
+
+    return countLines;
+} 
+
+char* ReturnDataTxt(FILE* arq)
+{
+    char line[30];
+    char* result;
+    int countIndex = 0;
+
+    int countList = CountDataTxt(arq);
+    char* arrayOfNames[countList];
+
+    while(!feof(arq))
+    {
+        result = fgets(line, 30, arq);
+
+        if(result)
+        {
+            arrayOfNames[countIndex] = line;
+        }
+
+        countIndex++;
+    }
+
+    return arrayOfNames;
+}
+
 void ShowDataTxt(FILE* arq)
 {
-    char line[100];
+    char line[30];
     char* result;
 
     while (!feof(arq))
     {
         result = fgets(line, 100,arq);
+
         if(result)
             printf("Name: %s\n", line);
     }

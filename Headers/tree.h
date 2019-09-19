@@ -3,14 +3,14 @@
 
 typedef struct tree Tree;
 
-Tree * criar();
-void destruir(Tree * t);
+Tree * Create();
+void Destroy(Tree * t);
 
-int altura(Tree * t);
-int contar_folhas(Tree * t);
-void imprimir(Tree * t);
+int Height(Tree * t);
+int LeavesCount(Tree * t);
+void Show(Tree * t);
 
-int buscar(Tree * t, char * v);
-void inserir(Tree * t, char * v);
-void remover(Tree * t, char * v);
+int Find(Tree * t, char * v);
+void Insert(Tree * t, char * v);
+void Remove(Tree * t, char * v);
 
