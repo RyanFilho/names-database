@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 FILE* OpenDataTxt();
-void ShowDataTxt(FILE* arq);
-int CountDataTxt(FILE* arq);
+int CountDataTxt();
+void ShowDataTxt();
+char** ReturnDataTxt();

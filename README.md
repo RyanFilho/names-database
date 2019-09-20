@@ -51,8 +51,6 @@ fornecido.
 Para facilitar a implementação, armazene todas os nomes em letras minúsculas, e considere as entradas
 fornecidas nas operações como sendo minúsculas. 
 
-
-
 ###### Commands to run on docker:
 ```powershell
 $ docker build -t names-database .
