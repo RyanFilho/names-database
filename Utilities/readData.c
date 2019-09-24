@@ -1,5 +1,22 @@
 #include "../Headers/utilities.h"
 
+struct diary
+{
+    char name[30];
+};
+
+struct no
+{
+    Diary diary;
+    struct No* prox;
+};
+
+struct list
+{
+    int countList;
+    No *head;
+};
+
 FILE* OpenDataTxt()
 {
     FILE *arq;
@@ -10,7 +27,32 @@ FILE* OpenDataTxt()
         return arq;
 }
 
-int CountDataTxt()
+List* InitializeList()
+{
+    List* list = (List*) malloc(sizeof(List));
+
+    if(list != NULL)
+    {
+        list->countList = 0;
+        list->head = NULL;
+    }
+
+    return list;
+}
+
+void AddName(List* list)
+{
+    Diary diary;
+    getchar();
+    fflush(stdin);
+    printf("Escreva seu nome: ");
+    fgets(diary.name, 30, stdin);
+
+    InsertDataList(list, diary);
+
+}
+
+void InsertDataTxtToList(List* list)
 {
     FILE* arq;
     char line[30];
@@ -23,54 +65,39 @@ int CountDataTxt()
         result = fgets(line, 100,arq);
 
         if(result)
-            countLines++;
-    }
-
-    fclose(arq);
-    return countLines;
-} 
-
-char** ReturnDataTxt()
-{
-    FILE* arq;
-    char line[30];
-    char* result;
-    int countIndex = 0;
-
-    char** arrayOfNames = malloc(2000 * sizeof(char*));
-
-    arq = OpenDataTxt();
-    while (!feof(arq))
-    {
-        result = fgets(line, 30, arq);
-
-        if(result)
         {
-            arrayOfNames[countIndex] = malloc(40 * sizeof(char));
-            strcpy(arrayOfNames[countIndex], result);
-            //printf("%d\n", countIndex);
-            countIndex++;
-        }
-    }
+            No* node = (No*) malloc(sizeof(No));
 
-    return arrayOfNames;
-    
+            strcpy(node->diary.name, result);
+            node->prox = list->head;
+            list->head = node;
+            list->countList++;
+        }
+            
+    }
 }
 
-void ShowDataTxt()
+void InsertDataList(List* list, Diary diary)
 {
-    FILE* arq;
-    char line[30];
-    char* result;
+    No* node = (No*) malloc(sizeof(No));
 
-    arq = OpenDataTxt();
-    while (!feof(arq))
+    strcpy(node->diary.name, diary.name);
+    node->prox = list->head;
+    list->head = node;
+    list->countList++;
+}
+
+void ShowListData(List* list)
+{   
+    int cont = 0;
+    No* pointer = list->head;
+
+    while (pointer != NULL)
     {
-        result = fgets(line, 100,arq);
+        printf("------- Name %d -------\n", cont+1);
+        printf("Name: %s\n", pointer->diary.name);
 
-        if(result)
-            printf("Name: %s\n", line);
+        pointer = pointer->prox;
+        cont++;
     }
-    
-    fclose(arq);
 }
