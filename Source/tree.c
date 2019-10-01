@@ -1,7 +1,4 @@
 #include "../Headers/tree.h"
-#include "../Utilities/readData.c"
-#include "../Utilities/menu.c"
-#include <string.h>
 
 typedef struct node Node;
 
@@ -100,13 +97,26 @@ void Insert(Tree * arv, char * n) {
 	arv->root = InsertNode(arv->root, n);
 }
 
-Node * RemoveBigger(Node * root, char * pmaior) {
+void ShowInOrderNewLineLike(Node * root, char * substring) {
+	if (root != NULL) {		
+		ShowInOrderNewLineLike(root->left, substring);
+		if (strstr(root->name, substring) != NULL) printf("%s\n", root->name);
+		ShowInOrderNewLineLike(root->right, substring);
+	}
+}
+
+void ShowLike(Tree * a, char * substring) {
+	ShowInOrderNewLineLike(a->root, substring);
+	printf("\n");
+} 
+
+Node * RemoveBigger(Node * root, char * bigger) {
 	if (root != NULL) {
 		if (root->right != NULL) {
-			root->right = RemoveBigger(root->right, pmaior);
+			root->right = RemoveBigger(root->right, bigger);
 		} else {
 			Node * aux = root;
-			pmaior = root->name;
+			bigger = root->name;
 			root = root->left;
 			free(aux);
 		}
@@ -114,14 +124,13 @@ Node * RemoveBigger(Node * root, char * pmaior) {
 	return root;
 }
 
-Node * RemoveNode(Node * root, char * n) {
+Node * RemoveNode(Node * root, char * v) {
 	if (root != NULL) {
-		int result = strcmp(n, root->name);
-		if (result < 0) {
-			root->left = RemoveNode(root->left, n);
+		if (strcmp(v, root->name) < 0) {
+			root->left = RemoveNode(root->left, v);
 		} else {
-			if (result > 0) {
-				root->right = RemoveNode(root->right, n);
+			if (strcmp(v, root->name) > 0) {
+				root->right = RemoveNode(root->right, v);
 			} else { //ENCONTROU
 				Node * aux = root;
 				// FOLHA (GRAU 0)
@@ -145,19 +154,35 @@ Node * RemoveNode(Node * root, char * n) {
 	return root;
 }
 
-void Remove(Tree * tree, char * n) {
-	tree->root = RemoveNode(tree->root, n);
+void Remove(Tree * arv, char * v) {
+	arv->root = RemoveNode(arv->root, v);
 }
 
-void ShowInOrderNewLineLike(Node * root, char * substring) {
-	if (root != NULL) {		
-		ShowInOrderNewLineLike(root->left, substring);
-		if (strstr(root->name, substring) != NULL) printf("%s\n", root->name);
-		ShowInOrderNewLineLike(root->right, substring);
-	}
-}
 
-void ShowLike(Tree * a, char * substring) {
-	ShowInOrderNewLineLike(a->root, substring);
-	printf("\n");
-} 
+
+
+
+
+
+
+
+
+
+
+// // Listar e remover da memória todos os nomes que são maiores, em ordem alfabética, que um nome fornecido.
+// void ShowAndRemoveHigherThan(Tree * a, char * value) {
+// 	ShowAndRemoveNodeHigherThan(a->root, value);
+// 	printf("\n");
+// } 
+
+// void ShowAndRemoveNodeHigherThan(Node * root, char * value) {
+// 	if (root != NULL) {
+		
+// 		if (strcmp(value, root->name) > 0)
+// 			ShowAndRemoveNodeHigherThan(root->left, value);			
+// 			printf("%s\n", root->name);
+// 			ShowAndRemoveNodeHigherThan(root->right, value);
+			
+		
+// 	}
+// } 

@@ -53,6 +53,6 @@ fornecidas nas operações como sendo minúsculas.
 
 ###### Commands to run on docker:
 ```powershell
-$ docker build -t names-database .
-$ docker run -it --rm --name names-database names-database
+docker build -t names-database . 
+docker run -it --rm --name names-database names-database
 ```
